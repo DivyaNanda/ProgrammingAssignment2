@@ -1,30 +1,29 @@
-# R-programming
-# Programming Assignment #2
+# Programming Assignment 2
 
 # The 'makeCacheMatrix' function creates an object to handle
-# the matrix which is to be inverted.
-# And also returns a list of available methods.
+# the matrix that can be inverted.
+# And returns a list of available methods.
 
 makeCacheMatrix <- function(x = matrix()) {
-	# Clears the cachedInverse variable
-	cachedInverse <- NULL
+	# Clears the myInverse variable
+	myInverse <- NULL
 	
 	# Method to set a new matrix to be inverted
 	set <- function(y) {					
-		x <<- y						# update x
-		cachedInverse <- NULL				# clear the inversion result, since x is updated
+		x <<- y								# update x
+		myInverse <- NULL				# clear the inversion result, since x is updated
 	}
 	
 	# Method to obtain the original matrix
-	get <- function() x					# return x
+	get <- function() x						# return x
 	
 	# Method to set the inverse of x
 	setInverse <- function(inverse) {
-		cachedInverse <<- inverse			# Update the inverse
+		myInverse <<- inverse			# Update the inverse
 	}
 	
 	# Method to obtain the cached inverse of x
-	getInverse <- function() cachedInverse	                # return the cached inverse
+	getInverse <- function() myInverse	# return the cached inverse
 	
 	list(set = set,
 		get = get,
@@ -40,18 +39,18 @@ makeCacheMatrix <- function(x = matrix()) {
 ## the inverse of given matrix. 
 ## This method accepts 'makeCacheMatrix' as an argument.
 
-cacheSolve <- function(cachedMatrix) {
+cacheSolve <- function(matrix) {
 	# Obtain the previously stored result
-	inverse <- cachedMatrix$getInverse()				
+	mat_inverse <- matrix$getInverse()				
 	
-	# Check if variable 'inverse' is null or not (i.e. inverse of the given matrix is already calculated or not)
-	if(!is.null(inverse)) {								
-		message("Obtaining inverse from cache..")
-		return(inverse)					# Return the cached result of matrix inverse
+	# Check if variable 'mat_inverse' is null or not (i.e. inverse of the given matrix is already calculated or not)
+	if(!is.null(mat_inverse)) {								
+		message("Getting result from cache...")
+		return(mat_inverse)									# Return the cached result of matrix inverse
 	}
 	
 	# Calculate the inverse and cache it
-	inverse <- cachedMatrix$setInverse(solve(cachedMatrix$get()))	
+	mat_inverse <- matrix$setInverse(solve(matrix$get()))	
 	
-	return(inverse)
+	return(mat_inverse)
 }
